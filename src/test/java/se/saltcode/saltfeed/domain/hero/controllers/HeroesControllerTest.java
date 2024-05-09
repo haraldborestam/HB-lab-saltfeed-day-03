@@ -40,6 +40,8 @@ class HeroesControllerTest {
     @BeforeEach
     void setup() throws Exception {
 
+        // Ett HeroResponse kräver i sin constructor en Hero och en tid.
+        // Vi har ingen färdig Hero att skicka så vi skapar en istället.
         mockHeroResponse = new HeroResponse(
                 new Hero("Captain Kirk", "https://trekkiapi.dev/api/people/3232/"),
                 LocalDateTime.now()
@@ -58,6 +60,8 @@ class HeroesControllerTest {
         when(apiServiceMock.getHeroes()).thenReturn(mockHeroListResponse);
     }
 
+    // Det här testet kolla om ett simulerat GET request till VÅR server
+    // returnerar en http status: 200 OK.
     @Test
     void shouldReturnListOfHeroesOnRequest() throws Exception {
         // Act & Assert
@@ -66,14 +70,22 @@ class HeroesControllerTest {
 
     }
 
+    // Det här testet kollar både status 200 OK samt om responsen är innehållsmässigt korrekt.
+    //
     @Test
-    void shouldReturnMockedListonRequest() throws Exception {
+    void shouldReturnMockedListOnRequest() throws Exception {
         // Act & Assert
         mvc.perform(get("/api/public/heroes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.count", Matchers.is(mockHeroListResponse.count())));
     }
 
+    // Det här testet simulerar en inkommande GET request till vår server.
+    // Det innebär att den Controller som är ansvarig för den aktuella endpointen kommer köras.
+    // Därför kollar vi i HeroesController-classen.
+    // Vi förväntar oss en http status: 200 OK, från vår egna server.
+    // OBS: vi bryr oss alltså inte om vad servern skickar oss, vi bryr oss bara om
+    // att den skickar något överhuvudtaget.
     @Test
     void shouldReturnHeroOnRequest() throws Exception {
         // Act & Assert
@@ -81,6 +93,12 @@ class HeroesControllerTest {
                 .andExpect(status().isOk());
     }
 
+    // Till skillnad från föregående test så är det här lite mer utvecklat.
+    // Här vill vi nämligen också ha ett väldigt specifikt svar från servern.
+    // Vi vill nämligen att servern returnerar:
+    // namn: Captain Kirk
+    // url: https://trekkiapi.dev/api/people/3232/
+    //
     @Test
     void shouldReturnMockedHeroData() throws Exception {
         // Act & Assert
