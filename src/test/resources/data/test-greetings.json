@@ -1,0 +1,20 @@
+{
+  "polite": [
+    "Very nice to meet you, {name}!",
+    "You are looking nice today {name}"
+  ],
+  "impolite": [
+    "{name}!? - go suck a pickle!",
+    "You are a pickle {name}!!!"
+  ]
+}
+
+
+
+
+
+
+
+
+
+

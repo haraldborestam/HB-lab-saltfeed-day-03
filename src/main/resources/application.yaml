@@ -1,0 +1,27 @@
+server.port: 8081
+
+logging.level.org.springframework.security: TRACE
+
+greetings-files:
+  polite: data/polite-greetings.txt
+  impolite: data/impolite-greetings.txt
+  json: data/greetings.json
+
+swapi-url: https://swapi.py4e.com/api/
+
+spring:
+  config.import: optional:secrets.yml
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:saltdb;
+    username: sa
+    password:
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: update
+  h2.console:
+    path: /h2-console
+    settings.trace: false
+    settings.web-allow-others: false
